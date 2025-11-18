@@ -31,8 +31,8 @@ The overridden `begin()` method configures the MPR121 for optimal performance wi
 
 ```
 MPR121 -> ESP32-C3
-  SDA  ->  GPIO1
-  SCL  ->  GPIO2
+  SDA  ->  SDA
+  SCL  ->  SCL
   VCC  ->  3.3V
   GND  ->  GND
 
@@ -41,28 +41,6 @@ DY-HV20T -> ESP32-C3
   RX   ->  GPIO21 (TXO)
   VCC  ->  5V
   GND  ->  GND
-```
-
-## Usage
-
-```cpp
-#include "MyMPR121.h"
-
-MyMPR121 mpr121;
-
-void setup() {
-  Wire.begin();
-
-  if (!mpr121.begin(0x5A, &Wire)) {
-    Serial.println("MPR121 init failed!");
-    while(1);
-  }
-
-  // All Adafruit library functions available:
-  // mpr121.touched()
-  // mpr121.filteredData()
-  // mpr121.baselineData()
-}
 ```
 
 ## License
