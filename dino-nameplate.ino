@@ -1,6 +1,6 @@
 #include <Wire.h>
-#include "MyMPR121.h"
-#include "RingWindow.h"
+#include "src/MyMPR121.h"
+#include "src/RingWindow.h"
 
 #ifndef _BV
 #define _BV(bit) (1 << (bit))
