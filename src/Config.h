@@ -16,7 +16,7 @@ constexpr uint8_t MAX_RETRY_ATTEMPTS = 10;
 namespace Audio {
 constexpr uint8_t AUDIO_RXI = 26; // ESP32 RXI -> DY-HV20T TX
 constexpr uint8_t AUDIO_TXO = 27; // ESP32 TXO -> DY-HV20T RX
-constexpr uint8_t AUDIO_BUSY = A4;
+constexpr uint8_t AUDIO_BUSY = 25;
 constexpr unsigned long AUDIO_BEGIN_TIMEOUT_MS = 150;
 constexpr unsigned long AUDIO_END_COOLDOWN_MS = 100;
 constexpr unsigned long AUDIO_MAX_DURATION_MS = 7000;
@@ -24,7 +24,7 @@ constexpr unsigned long AUDIO_MAX_DURATION_MS = 7000;
 
 namespace Touch {
 constexpr uint8_t MPR121_I2C_ADDR = 0x5A;
-constexpr uint8_t NUM_ELECTRODES = 1;
+constexpr uint8_t NUM_ELECTRODES = 3;
 
 // --- MPR121 Threshold Constants ---
 constexpr uint8_t TOUCH_THRESHOLD = 12;
