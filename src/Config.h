@@ -14,7 +14,8 @@ constexpr uint32_t WATCHDOG_TIMEOUT_MS = 10000;
 constexpr uint8_t MAX_RETRY_ATTEMPTS = 10;
 
 namespace BrightSign {
-constexpr uint8_t BRIGHTSIGN_OUT_PIN1 = 18;
+constexpr uint8_t LEFT_BRIGHTSIGN_OUT_PIN = 18;
+constexpr uint8_t RIGHT_BRIGHTSIGN_OUT_PIN = 17;
 constexpr uint16_t BRIGHTSIGN_SIGNAL_TIMEOUT_MS = 150;
 } // namespace BrightSign
 
