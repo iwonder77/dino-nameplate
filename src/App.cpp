@@ -3,6 +3,9 @@
 
 bool App::setup() {
   pinMode(Config::Audio::AUDIO_BUSY, INPUT);
+  pinMode(Config::Audio::AUDIO_OUT, OUTPUT);
+  digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
+
   pinMode(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, OUTPUT);
   pinMode(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, OUTPUT);
   digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
@@ -59,15 +62,16 @@ void App::run() {
     currTouched = mpr121.touched();
     for (uint8_t i = 0; i < Config::Touch::NUM_ELECTRODES; i++) {
       if ((currTouched & _BV(i)) && !(lastTouched & _BV(i))) {
-        // if it *is* touched and *wasnt* touched before, send UART command to
-        // DY-HV20T to play track, wait for busy pin to assert, then
-        // transition state
-        player.playTrackByIndex((uint16_t)i + 1);
+        // if it *is* touched and *wasnt* touched before, send LOW trigger
+        // signal to DY-HV20T to play track, take timestamp, then transition
+        // state
+        digitalWrite(Config::Audio::AUDIO_OUT, LOW);
         playbackBeganAt = millis();
+        currentRunState = RunState::PLAYING;
 
+        // also send LOW signal to brightsign
         digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, LOW);
         digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, LOW);
-        currentRunState = RunState::PLAYING;
         break;
       }
     }
@@ -75,13 +79,11 @@ void App::run() {
     break;
   case RunState::PLAYING:
     // wait for busy pin to assert
-    if (millis() - playbackBeganAt < Config::Audio::AUDIO_BEGIN_TIMEOUT_MS)
+    if (millis() - playbackBeganAt < Config::LOW_SIGNAL_TIMEOUT_MS)
       break;
-    if (millis() - playbackBeganAt >
-        Config::BrightSign::BRIGHTSIGN_SIGNAL_TIMEOUT_MS) {
-      digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
-      digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, HIGH);
-    }
+    digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
+    digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
+    digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, HIGH);
     // safety timeout: if playback exceeds maximum expected duration, force exit
     if (millis() - playbackBeganAt > Config::Audio::AUDIO_MAX_DURATION_MS) {
       Serial.println("WARN: Playback timeout, forcing IDLE");
