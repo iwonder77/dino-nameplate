@@ -3,6 +3,8 @@
 
 bool App::setup() {
   pinMode(Config::Audio::AUDIO_BUSY, INPUT);
+  pinMode(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, OUTPUT);
+  digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, HIGH);
 
   if (!mpr121.begin()) {
     Serial.print("MPR121 not found, check wiring");
@@ -59,8 +61,9 @@ void App::run() {
         // DY-HV20T to play track, wait for busy pin to assert, then
         // transition state
         player.playTrackByIndex((uint16_t)i + 1);
-
         playbackBeganAt = millis();
+
+        digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, LOW);
         currentRunState = RunState::PLAYING;
         break;
       }
@@ -71,6 +74,10 @@ void App::run() {
     // wait for busy pin to assert
     if (millis() - playbackBeganAt < Config::Audio::AUDIO_BEGIN_TIMEOUT_MS)
       break;
+    if (millis() - playbackBeganAt >
+        Config::BrightSign::BRIGHTSIGN_SIGNAL_TIMEOUT_MS) {
+      digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, HIGH);
+    }
     // safety timeout: if playback exceeds maximum expected duration, force exit
     if (millis() - playbackBeganAt > Config::Audio::AUDIO_MAX_DURATION_MS) {
       Serial.println("WARN: Playback timeout, forcing IDLE");
