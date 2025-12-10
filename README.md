@@ -1,6 +1,8 @@
-# Museum Touch Interactive System
+# Dino Nameplate
 
-A capacitive touch sensing system for the Rise of the Giants exhibit at Thanksgiving Point, featuring custom baseline tracking and signal optimization for thick dielectric overlays.
+## Overview
+
+The capacitive touch sensing firmware for the Supersaurus nameplate of the Rise of the Giants exhibit at Thanksgiving Point. Features a custom MPR121 class, extended from [Adafruit's MPR121 Library](https://github.com/adafruit/Adafruit_MPR121), that configures baseline tracking registers, applies ema filtering to ensure touch events are detected with thick acrylic overlays, and has additional logic that triggers video and sound playback.
 
 ## Hardware Components
 
@@ -11,39 +13,18 @@ A capacitive touch sensing system for the Rise of the Giants exhibit at Thanksgi
 
 ## Key Features
 
-- Enhanced sensitivity for thick dielectric materials (0.2" PLA)
-- Stubborn baseline tracking to prevent drift during prolonged touches
+- Enhanced filtering for thick 0.2" acrylic
+- Stubborn baseline tracking to prevent immediate drift during touch events
 
 ## Software Architecture
 
 ### Custom MPR121 Class
 
-This project extends the [Adafruit MPR121 Library](https://github.com/adafruit/Adafruit_MPR121) through inheritance to provide exhibit-specific configuration. Default baseline parameters and more were not sufficient for the installation. The original library handles all I2C communication and register management.
+This project extends the [Adafruit MPR121 Library](https://github.com/adafruit/Adafruit_MPR121) to provide exhibit-specific configuration. Default baseline parameters and more were not sufficient for the installation.
 
 ### Custom `begin()` Function
 
-The overridden `begin()` method configures the MPR121 for optimal performance with thick overlays:
+Our modified `begin()` method configures the MPR121 for better performance with thick overlays:
 
-- **Baseline Tracking**: NCLF set to 255 samples (2.55s) to prevent baseline from tracking during sustained touches
-- **Recovery Speed**: Fast baseline recovery (NCLR=4) after touch release
-
-## Wiring
-
-```
-MPR121 -> ESP32-C3
-  SDA  ->  SDA
-  SCL  ->  SCL
-  VCC  ->  3.3V
-  GND  ->  GND
-
-DY-HV20T -> ESP32-C3
-  TX   ->  GPIO20 (RXI)
-  RX   ->  GPIO21 (TXO)
-  VCC  ->  5V
-  GND  ->  GND
-```
-
-## License
-
-Original Adafruit MPR121 library: BSD License  
-Custom configuration extensions: [Your License Here]
+- **Baseline Tracking**:
+- **Recovery Speed**:
