@@ -13,6 +13,11 @@ enum class AppState { DEBUG, RUN, ERROR_RECOVERY };
 constexpr uint32_t WATCHDOG_TIMEOUT_MS = 10000;
 constexpr uint8_t MAX_RETRY_ATTEMPTS = 10;
 
+namespace BrightSign {
+constexpr uint8_t BRIGHTSIGN_OUT_PIN1 = 18;
+constexpr uint16_t BRIGHTSIGN_SIGNAL_TIMEOUT_MS = 150;
+} // namespace BrightSign
+
 namespace Audio {
 constexpr uint8_t AUDIO_RXI = 26; // ESP32 RXI -> DY-HV20T TX
 constexpr uint8_t AUDIO_TXO = 27; // ESP32 TXO -> DY-HV20T RX
