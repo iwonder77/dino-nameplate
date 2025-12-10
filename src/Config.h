@@ -12,18 +12,16 @@ namespace Config {
 enum class AppState { DEBUG, RUN, ERROR_RECOVERY };
 constexpr uint32_t WATCHDOG_TIMEOUT_MS = 10000;
 constexpr uint8_t MAX_RETRY_ATTEMPTS = 10;
+constexpr uint16_t LOW_SIGNAL_TIMEOUT_MS = 150;
 
 namespace BrightSign {
 constexpr uint8_t LEFT_BRIGHTSIGN_OUT_PIN = 18;
 constexpr uint8_t RIGHT_BRIGHTSIGN_OUT_PIN = 17;
-constexpr uint16_t BRIGHTSIGN_SIGNAL_TIMEOUT_MS = 150;
 } // namespace BrightSign
 
 namespace Audio {
-constexpr uint8_t AUDIO_RXI = 26; // ESP32 RXI -> DY-HV20T TX
-constexpr uint8_t AUDIO_TXO = 27; // ESP32 TXO -> DY-HV20T RX
+constexpr uint8_t AUDIO_OUT = 26;
 constexpr uint8_t AUDIO_BUSY = 25;
-constexpr unsigned long AUDIO_BEGIN_TIMEOUT_MS = 150;
 constexpr unsigned long AUDIO_END_COOLDOWN_MS = 100;
 constexpr unsigned long AUDIO_MAX_DURATION_MS = 7000;
 } // namespace Audio
