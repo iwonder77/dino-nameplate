@@ -17,8 +17,6 @@ void setup() {
   Serial.begin(9600);
   delay(100);
   Wire.begin();
-  delay(100);
-  Serial1.begin(9600, SERIAL_8N1, Config::Audio::AUDIO_RXI, Config::Audio::AUDIO_TXO);
   delay(3000);
 
   // initialize the Task Watchdog
