@@ -3,8 +3,10 @@
 
 bool App::setup() {
   pinMode(Config::Audio::AUDIO_BUSY, INPUT);
-  pinMode(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, OUTPUT);
-  digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, HIGH);
+  pinMode(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, OUTPUT);
+  pinMode(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, OUTPUT);
+  digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
+  digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, HIGH);
 
   if (!mpr121.begin()) {
     Serial.print("MPR121 not found, check wiring");
@@ -63,7 +65,8 @@ void App::run() {
         player.playTrackByIndex((uint16_t)i + 1);
         playbackBeganAt = millis();
 
-        digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, LOW);
+        digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, LOW);
+        digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, LOW);
         currentRunState = RunState::PLAYING;
         break;
       }
@@ -76,7 +79,8 @@ void App::run() {
       break;
     if (millis() - playbackBeganAt >
         Config::BrightSign::BRIGHTSIGN_SIGNAL_TIMEOUT_MS) {
-      digitalWrite(Config::BrightSign::BRIGHTSIGN_OUT_PIN1, HIGH);
+      digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
+      digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, HIGH);
     }
     // safety timeout: if playback exceeds maximum expected duration, force exit
     if (millis() - playbackBeganAt > Config::Audio::AUDIO_MAX_DURATION_MS) {
