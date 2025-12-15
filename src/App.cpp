@@ -4,7 +4,7 @@
 bool App::setup() {
   pinMode(Config::Audio::AUDIO_BUSY, INPUT);
   pinMode(Config::Audio::AUDIO_OUT, OUTPUT);
-  digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
+  digitalWrite(Config::Audio::AUDIO_OUT, LOW);
 
   pinMode(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, OUTPUT);
   pinMode(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, OUTPUT);
@@ -65,7 +65,7 @@ void App::run() {
         // if it *is* touched and *wasnt* touched before, send LOW trigger
         // signal to DY-HV20T to play track, take timestamp, then transition
         // state
-        digitalWrite(Config::Audio::AUDIO_OUT, LOW);
+        digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
         playbackBeganAt = millis();
         currentRunState = RunState::PLAYING;
 
@@ -81,7 +81,7 @@ void App::run() {
     // wait for busy pin to assert
     if (millis() - playbackBeganAt < Config::LOW_SIGNAL_TIMEOUT_MS)
       break;
-    digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
+    digitalWrite(Config::Audio::AUDIO_OUT, LOW);
     digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, HIGH);
     digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, HIGH);
     // safety timeout: if playback exceeds maximum expected duration, force exit
