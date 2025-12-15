@@ -4,7 +4,7 @@
 #include "src/App.h"
 #include "src/Config.h"
 
-App app = App(Config::AppState::DEBUG);
+App app = App(Config::AppState::RUN);
 
 // Task Watchdog Timer Configuration Struct
 esp_task_wdt_config_t twdt_config = {
