@@ -17,7 +17,8 @@ void setup() {
   Serial.begin(9600);
   delay(100);
   Wire.begin();
-  delay(3000);
+  // hardcode 10 second delay before we begin setup
+  delay(10000);
 
   // initialize the Task Watchdog
   // (TWDT is a hardware-backed timer tied to a specific FreeRTOS task)
