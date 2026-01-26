@@ -1,5 +1,7 @@
 # Dino Nameplate
 
+https://github.com/user-attachments/assets/d761b371-b2cf-4e69-9180-89696157810f
+
 ## Overview
 
 The capacitive touch sensing firmware for the Supersaurus nameplate of the Rise of the Giants exhibit at Thanksgiving Point. Features a custom MPR121 class, extended from [Adafruit's MPR121 Library](https://github.com/adafruit/Adafruit_MPR121), that configures baseline tracking registers, applies ema filtering to ensure touch events are detected with thick acrylic overlays, and has additional logic that triggers video and sound playback.
