@@ -12,4 +12,4 @@ The DY-HV20T used in this installation is the active low-level trigger version, 
 
 To prevent this failure mode, I leveraged the BC547B npn BJT to act as a low side switch. Whenever we DO want to play a sound, the ESP32 would drive current through the BJT's base through a 4.7k resistor, turning the transistor on and actively pulling the trigger pin low (see picture below for circuit analysis). In all other cases (ESP32 powered off, reset, or sending a LOW signal) the BJT would remain off, leaving the trigger pin pulled high (preventing any sound from playing). This approach ensures that sounds are only triggered intentionally.
 
-!(bjt circuit analysis)[bjt_circuit.jpeg]
+![bjt circuit analysis](bjt_circuit.jpeg)
