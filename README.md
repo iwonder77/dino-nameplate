@@ -9,9 +9,10 @@ The capacitive touch sensing firmware for the Supersaurus nameplate of the Rise 
 ## Hardware
 
 - **[Adafruit MPR121](https://www.adafruit.com/product/1982?gad_source=1&gad_campaignid=21079227318&gbraid=0AAAAADx9JvQkAsO7RS9bBB6XvtT1bf9lk&gclid=CjwKCAiAz_DIBhBJEiwAVH2XwDNIsjXkWfC8uAxjFRL1-COz-OxQyJIywEJ_eRMTO43w4skTKTorZRoCbN8QAvD_BwE)** - 12-channel capacitive touch sensor breakout
-- **[SparkFun Pro Micro ESP32-C3](https://www.sparkfun.com/sparkfun-pro-micro-esp32-c3.html)** - Microcontroller with native USB and UART
-- **DY-HV20T** - 20W audio playback module for triggered sound effects
+- **ESP32-DevkitC-v4**
+- **DY-HV20T** - 20W audio playback module for triggered/UART sound playback
 - **Touch Pads** - 3x 1/16" aluminum plates covered with copper tape for ease of soldering (see `docs/` for more info on construction)
+- **BrightSigns** - 2x BrightSigns for video playback
 
 ## Wiring Diagram
 
