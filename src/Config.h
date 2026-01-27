@@ -53,19 +53,21 @@ constexpr uint8_t ESI = 0b010;        // 4 ms sampling period
 constexpr uint8_t REG_CONFIG2 = (CDT_GLOBAL << 5) | (SFI << 3) | ESI;
 
 // --- BASELINE TRACKING CONFIGURATION ---
-// See sec 5.5 of datasheet AND application note
-// AN3891 for baseline tracking and filtering info
-//
-// With the 0.2" PLA plate on the copper pads, the filtered data only dropped
-// about ~30 counts, the MPR121's default FALLING baseline tracking treated
-// this low delta as noise and quickly pulled the baseline down, making touches
-// undetectable
-//
-// To fix this, we'll slow down the FALLING baseline tracking by adjusting:
-// * MHD (Maximum Half Delta): largest variation allowed through baseline filter
-// * NHD (Noise Half Delta): baseline step size when non-noise drift IS detected
-// * NCL (Noise Count Limit): samples needed above MHD to treat changes as touch
-// * FDL (Filter Delay Limit): controles baseline update speed (larger = slower)
+// See sec 5.5 of datasheet AND application note AN3891
+
+/**
+ * IMPORTANT:
+ * With the 0.2" PLA plate on the copper pads, the filtered data only dropped
+ * about ~30 counts, the MPR121's default FALLING baseline tracking treated
+ * this low delta as noise and quickly pulled the baseline down, making touches
+ * undetectable
+ *
+ * To fix this, we'll slow down the FALLING baseline tracking by adjusting:
+ * - MHD (Maximum Half Delta): largest variation allowed through baseline filter
+ * - NHD (Noise Half Delta): baseline step size when non-noise drift IS detected
+ * - NCL (Noise Count Limit): samples needed above MHD to treat changes as touch
+ * - FDL (Filter Delay Limit): controles baseline update speed (larger = slower)
+ */
 constexpr uint8_t MHDF = 0x04; // tiny delta (±8 counts) are tracked immediately
 constexpr uint8_t NHDF = 0x01; // tiny increment (1 count) when baseline adjusts
 constexpr uint8_t NCLF = 0x90; // 144 successive samples beyond MHD b4 adjusting
@@ -82,7 +84,7 @@ constexpr uint8_t FDLR = 0x00;
 // * ELEPROX_EN - bits [5:4], enables and controls proximity detection
 // * ELE_EN - bits [3:0], enables electrode touch/capacitance detection
 constexpr uint8_t CL = 0b11; // init baseline loaded with 5 hb of 1st electrode
-constexpr uint8_t ELEPROX_EN = 0b00;       // proximitiy detection disabled
+constexpr uint8_t ELEPROX_EN = 0b00;       // proximity detection disabled
 constexpr uint8_t ELE_EN = NUM_ELECTRODES; // enable electrodes 0-x (run mode)
 constexpr uint8_t REG_ECR_RUN = (CL << 6) | (ELEPROX_EN << 4) | ELE_EN;
 
@@ -100,12 +102,6 @@ constexpr uint8_t ARE = 0;
 constexpr uint8_t ACE = 0;
 constexpr uint8_t REG_AUTOCONFIG0 =
     (FFI << 6) | (RETRY << 4) | (BVA << 2) | (ARE << 1) | ACE;
-// Auto-Configuration Control Register 1: 0x7C (AUTOCONFIG1)
-//  * SCTS (Skip Charge Time Search) - bit 7
-//  * bits [6:3] unused
-//  * OORIE (Out-of-range interrupt enable) - bit 2
-//  * ARFIE (Auto-reconfiguration fail interrupt enable) - bit 1
-//  * ACFIE (Auto-configuration fail interrupt enable) - bit 0
 
 // --- LIMIT REGISTERS (all 8-bits) ---
 // see pg 18 of datasheet AND application note 3889 for more information
