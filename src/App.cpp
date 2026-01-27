@@ -62,14 +62,15 @@ void App::run() {
     currTouched = mpr121.touched();
     for (uint8_t i = 0; i < Config::Touch::NUM_ELECTRODES; i++) {
       if ((currTouched & _BV(i)) && !(lastTouched & _BV(i))) {
-        // if it *is* touched and *wasnt* touched before, send LOW trigger
-        // signal to DY-HV20T to play track, take timestamp, then transition
-        // state
+        // if it *is* touched and *wasnt* touched before:
+        // send HIGH trigger signal to DY-HV20T to play the audio file
+        // take a timestamp
+        // then transition state
         digitalWrite(Config::Audio::AUDIO_OUT, HIGH);
         playbackBeganAt = millis();
         currentRunState = RunState::PLAYING;
 
-        // also send LOW signal to brightsign
+        // also send LOW signal to BrightSign
         digitalWrite(Config::BrightSign::LEFT_BRIGHTSIGN_OUT_PIN, LOW);
         digitalWrite(Config::BrightSign::RIGHT_BRIGHTSIGN_OUT_PIN, LOW);
         break;
